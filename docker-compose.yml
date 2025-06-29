@@ -1,26 +1,26 @@
-services:
-  mongodb:
-    image: mongo:7.0
-    restart: always
-    environment:
-      MONGO_INITDB_DATABASE: tech-chall
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: password
-    ports:
-      - 27017:27017
-    volumes:
-      - ./db/init.js:/docker-entrypoint-initdb.d/init.js
+# services:
+#   mongodb:
+#     image: mongo:7.0
+#     restart: always
+#     environment:
+#       MONGO_INITDB_DATABASE: tech-chall
+#       MONGO_INITDB_ROOT_USERNAME: admin
+#       MONGO_INITDB_ROOT_PASSWORD: password
+#     ports:
+#       - 27017:27017
+#     volumes:
+#       - ./db/init.js:/docker-entrypoint-initdb.d/init.js
 
-  app:
-    build: .
-    depends_on:
-      - mongodb
-    environment:
-      SPRING_DATA_MONGODB_HOST: mongodb
-      SPRING_DATA_MONGODB_PORT: 27017
-      SPRING_DATA_MONGODB_AUTHENTICATION_DATABASE: admin
-      SPRING_DATA_MONGODB_USERNAME: admin
-      SPRING_DATA_MONGODB_PASSWORD: password
-      SPRING_DATA_MONGODB_DATABASE: tech-chall
-    ports:
-      - 8080:8080
+#   app:
+#     build: .
+#     depends_on:
+#       - mongodb
+#     environment:
+#       SPRING_DATA_MONGODB_HOST: mongodb
+#       SPRING_DATA_MONGODB_PORT: 27017
+#       SPRING_DATA_MONGODB_AUTHENTICATION_DATABASE: admin
+#       SPRING_DATA_MONGODB_USERNAME: admin
+#       SPRING_DATA_MONGODB_PASSWORD: password
+#       SPRING_DATA_MONGODB_DATABASE: tech-chall
+#     ports:
+#       - 8080:8080

@@ -30,9 +30,8 @@ Criar uma aplicação de autoatendimento estilo fast-food que:
 - ✅ Acompanhamento do pedido com os status:
   - Recebido
   - Em preparação
-  - Pronto  
+  - Pronto
   - Finalizado
-
 
 ## ⚙️ Tecnologias Utilizadas
 
@@ -42,6 +41,16 @@ Criar uma aplicação de autoatendimento estilo fast-food que:
 - **Mercado Pago SDK**
 - **Docker**
 - **Lombok**
+
+---
+
+## ⚙️ Fluxo completo (etapas da pipeline)
+
+1. Commit/push no GitHub
+2. GitHub Actions builda imagem
+3. Push da imagem no Docker Hub
+4. Executa Terraform para criar/atualizar - infraestrutura (EKS, VPC etc)
+5. Aplica os manifests no cluster com kubectl (usando a imagem atualizada)
 
 ---
 
@@ -90,22 +99,21 @@ O projeto adota a arquitetura hexagonal para promover separação de responsabil
 +----------------+                     +------------------+
 ```
 
-
 ---
 
 ## 🚀 Como Executar Localmente
 
 ### Passo a Passo
 
-### 🐳 Opção 1: Executar via Docker (Aplicação Java Spring +  MongoDB)
+### 🐳 Opção 1: Executar via Docker (Aplicação Java Spring + MongoDB)
+
 ```bash
 docker-compose up -d
 ```
 
 #### 2️⃣ Acesse o link swagger
+
 http://localhost:8080/swagger-ui/index.html
-
-
 
 ### 🧑‍💻Opção 2: Compilando Manualmente (modo desenvolvedor)
 
@@ -117,19 +125,26 @@ http://localhost:8080/swagger-ui/index.html
 - Maven
 
 1. **Clone o repositório**
+
    ```bash
    git clone https://github.com/LucasMachadoID2/tech-challenge-fiap
    cd tech-challenge-fiap
 
+   ```
+
 2. **Certifique-se de que o MongoDB está rodando localmente**
-    * Exemplo: mongodb://localhost:27017
-    * application.properties
+
+   - Exemplo: mongodb://localhost:27017
+   - application.properties
 
 3. **Execute a aplicação com Maven**
-     ```bash
-    ./mvnw spring-boot:run
 
-5. **Para acessar a aplicação:**
+   ```bash
+   ./mvnw spring-boot:run
+
+   ```
+
+4. **Para acessar a aplicação:**
 
 Swagger: http://localhost:8080/swagger-ui/index.html
 
@@ -138,42 +153,39 @@ Swagger: http://localhost:8080/swagger-ui/index.html
 ## 📫 Endpoints Principais
 
 **Clientes:**
-| Método | Endpoint      | Descrição                |
+| Método | Endpoint | Descrição |
 | ------ | ------------- | ------------------------ |
-| GET    | `/v1/clients` | Listar todos os clientes |
-| POST   | `/v1/clients` | Criar um cliente         |
+| GET | `/v1/clients` | Listar todos os clientes |
+| POST | `/v1/clients` | Criar um cliente |
 <br>
 
 **Produtos:**
-| Método | Endpoint                                   | Descrição                |
+| Método | Endpoint | Descrição |
 | ------ | ------------------------------------------ | ------------------------ |
-| GET    | `/v1/products`                             | Listar todos os produtos |
-| POST   | `/v1/products`                             | Criar um produto         |
-| GET    | `/v1/products/category?category=SOBREMESA` | Filtrar por categoria    |
+| GET | `/v1/products` | Listar todos os produtos |
+| POST | `/v1/products` | Criar um produto |
+| GET | `/v1/products/category?category=SOBREMESA` | Filtrar por categoria |
 <br>
 
 **Pedidos:**
-| Método | Endpoint                                | Descrição                  |
+| Método | Endpoint | Descrição |
 | ------ | --------------------------------------- | -------------------------- |
-| POST   | `/v1/orders`                            | Criar um pedido            |
-| PATCH  | `/v1/orders/{id}?status=IN_PREPARATION` | Atualizar status do pedido |
+| POST | `/v1/orders` | Criar um pedido |
+| PATCH | `/v1/orders/{id}?status=IN_PREPARATION` | Atualizar status do pedido |
 <br>
-
 
 **Pagamentos:**
-| Método | Endpoint       | Descrição                     |
+| Método | Endpoint | Descrição |
 | ------ | -------------- | ----------------------------- |
-| PATCH  | `/v1/payments` | Atualizar status do pagamento |
+| PATCH | `/v1/payments` | Atualizar status do pagamento |
 <br>
-
 
 ## 🙋‍♀️ Equipe
 
-| Nome | RA      | Nome Discord                |
-| ------ | ------------- | ------------------------ |
-| Danilo Augusto Pereira     | 364411 | Danilo Augusto -  RM364411|
-| Gabriela Trindade Ferreira   | 364756 | Gabriela Ferreira - RM364756|
-| Guilherme Garcia Dos Santos Moraes   | 364613 | Guilherme Garcia - RM364613|
-| Lucas Matheus Monteiro Machado   | 361059 | Lucas Machado - RM361059|
-| Marjory Bispo Matos   | 361150 | Marjory Matos - RM361150|
-
+| Nome                               | RA     | Nome Discord                 |
+| ---------------------------------- | ------ | ---------------------------- |
+| Danilo Augusto Pereira             | 364411 | Danilo Augusto - RM364411    |
+| Gabriela Trindade Ferreira         | 364756 | Gabriela Ferreira - RM364756 |
+| Guilherme Garcia Dos Santos Moraes | 364613 | Guilherme Garcia - RM364613  |
+| Lucas Matheus Monteiro Machado     | 361059 | Lucas Machado - RM361059     |
+| Marjory Bispo Matos                | 361150 | Marjory Matos - RM361150     |
