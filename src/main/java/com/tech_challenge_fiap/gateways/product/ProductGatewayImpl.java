@@ -12,9 +12,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.tech_challenge_fiap.adapters.ProductAdapter.toDataModel;
-import static com.tech_challenge_fiap.adapters.ProductAdapter.toEntity;
-
 @Component
 @RequiredArgsConstructor
 public class ProductGatewayImpl implements ProductGateway {
@@ -25,7 +22,7 @@ public class ProductGatewayImpl implements ProductGateway {
     public ProductEntity save(ProductEntity productEntity) {
         // Verifica se é create ou update
         ProductDataModel productData;
-        
+
         if (productEntity.getId() == null) {
             // CREATE - gera novo ID
             productData = ProductAdapter.toDataModelWithId(productEntity);
@@ -33,7 +30,7 @@ public class ProductGatewayImpl implements ProductGateway {
             // UPDATE - mantém ID existente
             productData = ProductAdapter.toDataModel(productEntity);
         }
-        
+
         ProductDataModel savedProduct = productRepository.save(productData);
         return ProductAdapter.toEntity(savedProduct);
     }
