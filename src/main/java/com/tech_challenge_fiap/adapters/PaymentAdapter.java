@@ -7,8 +7,6 @@ import com.tech_challenge_fiap.entities.payment.PaymentStatusEnum;
 import com.tech_challenge_fiap.utils.enums.PaymentStatusEnumEntity;
 import lombok.experimental.UtilityClass;
 
-import java.util.UUID;
-
 @UtilityClass
 public class PaymentAdapter {
 
