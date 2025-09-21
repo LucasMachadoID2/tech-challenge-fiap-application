@@ -22,9 +22,17 @@ public class OrderGatewayImpl implements OrderGateway {
     private final OrderRepository orderRepository;
 
     @Override
-    public OrderEntity save(OrderEntity order) {
-        var savedOrder = orderRepository.save(toDataModel(order));
-        return toEntity(savedOrder);
+    public OrderEntity save(OrderEntity orderEntity) {
+        OrderDataModel orderData;
+        
+        if (orderEntity.getId() == null) {
+            orderData = OrderAdapter.toDataModelWithId(orderEntity);
+        } else {
+            orderData = OrderAdapter.toDataModel(orderEntity);
+        }
+        
+        OrderDataModel savedOrder = orderRepository.save(orderData);
+        return OrderAdapter.toEntity(savedOrder);
     }
 
     @Override

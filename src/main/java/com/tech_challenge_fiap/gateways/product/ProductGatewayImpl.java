@@ -22,9 +22,20 @@ public class ProductGatewayImpl implements ProductGateway {
     private final ProductRepository productRepository;
 
     @Override
-    public ProductEntity save(ProductEntity product) {
-        ProductDataModel productDataModel = productRepository.save(toDataModel(product));
-        return toEntity(productDataModel);
+    public ProductEntity save(ProductEntity productEntity) {
+        // Verifica se é create ou update
+        ProductDataModel productData;
+        
+        if (productEntity.getId() == null) {
+            // CREATE - gera novo ID
+            productData = ProductAdapter.toDataModelWithId(productEntity);
+        } else {
+            // UPDATE - mantém ID existente
+            productData = ProductAdapter.toDataModel(productEntity);
+        }
+        
+        ProductDataModel savedProduct = productRepository.save(productData);
+        return ProductAdapter.toEntity(savedProduct);
     }
 
     @Override

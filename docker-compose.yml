@@ -1,24 +1,18 @@
-services:
-  mongodb:
-    image: mongo:7.0
-    restart: always
-    environment:
-      MONGO_INITDB_DATABASE: tech-chall
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: password
-    ports:
-      - 27017:27017
+version: '3.8'
 
+services:
   app:
     build: .
-    depends_on:
-      - mongodb
     environment:
-      SPRING_DATA_MONGODB_HOST: mongodb
-      SPRING_DATA_MONGODB_PORT: 27017
-      SPRING_DATA_MONGODB_AUTHENTICATION_DATABASE: admin
-      SPRING_DATA_MONGODB_USERNAME: admin
-      SPRING_DATA_MONGODB_PASSWORD: password
-      SPRING_DATA_MONGODB_DATABASE: tech-chall
+      AWS_REGION: us-east-1
+      DYNAMODB_TABLE_USERS: tech-challenge-users
+      DYNAMODB_TABLE_ORDERS: tech-challenge-orders
+      DYNAMODB_TABLE_PRODUCTS: tech-challenge-products
+      DYNAMODB_TABLE_PAYMENTS: tech-challenge-payments
+      
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}
+      
     ports:
       - 8080:8080

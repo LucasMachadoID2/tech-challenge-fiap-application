@@ -14,4 +14,6 @@ public interface ClientGateway {
     List<ClientEntity> findAll();
 
     ClientEntity findByCpf(String cpf);
+
+    void deleteByCpf(String cpf);
 }

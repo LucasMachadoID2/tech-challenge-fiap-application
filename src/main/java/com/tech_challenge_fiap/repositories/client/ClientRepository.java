@@ -15,4 +15,6 @@ public interface ClientRepository {
     List<ClientDataModel> findAll();
 
     ClientDataModel findByCpf(String cpf);
+
+    void deleteByCpf(String cpf);
 }
