@@ -3,17 +3,13 @@ package com.tech_challenge_fiap.repositories.product;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.tech_challenge_fiap.data.models.ProductDataModel;
 import com.tech_challenge_fiap.utils.enums.CategoryEnum;
 import com.tech_challenge_fiap.utils.exceptions.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import com.tech_challenge_fiap.infrastructure.configs;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -36,7 +32,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     public void deleteById(String id) {
         try {
             ProductDataModel product = findById(id)
-                .orElseThrow(() -> new ProductNotFoundException(id));
+                    .orElseThrow(() -> new ProductNotFoundException(id));
             dynamoDBMapper.delete(product);
         } catch (ProductNotFoundException e) {
             throw e;
@@ -75,14 +71,14 @@ public class ProductRepositoryImpl implements ProductRepository {
         try {
             ProductDataModel product = new ProductDataModel();
             product.setCategory(category);
-            
+
             DynamoDBQueryExpression<ProductDataModel> queryExpression = new DynamoDBQueryExpression<ProductDataModel>()
-                .withIndexName("ByCategory")
-                .withConsistentRead(false)
-                .withHashKeyValues(product);
-            
+                    .withIndexName("ByCategory")
+                    .withConsistentRead(false)
+                    .withHashKeyValues(product);
+
             List<ProductDataModel> products = dynamoDBMapper.query(ProductDataModel.class, queryExpression);
-            
+
             if (products.isEmpty()) {
                 throw new ProductsByCategoryNotFoundException(category);
             }
@@ -98,12 +94,12 @@ public class ProductRepositoryImpl implements ProductRepository {
         try {
             ProductDataModel product = new ProductDataModel();
             product.setHasPromotion("true");
-            
+
             DynamoDBQueryExpression<ProductDataModel> queryExpression = new DynamoDBQueryExpression<ProductDataModel>()
-                .withIndexName("ByPromotion")
-                .withConsistentRead(false)
-                .withHashKeyValues(product);
-            
+                    .withIndexName("ByPromotion")
+                    .withConsistentRead(false)
+                    .withHashKeyValues(product);
+
             return dynamoDBMapper.query(ProductDataModel.class, queryExpression);
         } catch (Exception e) {
             throw new ProductPersistenceException("Failed to find products on promotion", e);
@@ -114,12 +110,12 @@ public class ProductRepositoryImpl implements ProductRepository {
         try {
             ProductDataModel product = new ProductDataModel();
             product.setName(name);
-            
+
             DynamoDBQueryExpression<ProductDataModel> queryExpression = new DynamoDBQueryExpression<ProductDataModel>()
-                .withIndexName("ByName")
-                .withConsistentRead(false)
-                .withHashKeyValues(product);
-            
+                    .withIndexName("ByName")
+                    .withConsistentRead(false)
+                    .withHashKeyValues(product);
+
             return dynamoDBMapper.query(ProductDataModel.class, queryExpression);
         } catch (Exception e) {
             throw new ProductPersistenceException("Failed to find products by name: " + name, e);

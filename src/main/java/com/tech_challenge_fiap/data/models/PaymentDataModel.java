@@ -5,11 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Setter
-@DynamoDBTable(tableName = "tech-challenge-payments") 
+@DynamoDBTable(tableName = "tech-challenge-payments")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +27,6 @@ public class PaymentDataModel {
     String qrCode;
 
     @DynamoDBAttribute
-    @DynamoDBTypeConvertedEnum 
+    @DynamoDBTypeConvertedEnum
     PaymentStatusEnumEntity status;
 }

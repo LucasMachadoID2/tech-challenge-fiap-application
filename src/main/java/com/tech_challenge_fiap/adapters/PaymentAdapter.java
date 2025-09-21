@@ -16,7 +16,7 @@ public class PaymentAdapter {
         return PaymentEntity.builder()
                 .qrImage(payment.getPointOfInteraction().getTransactionData().getQrCodeBase64())
                 .qrCode(payment.getPointOfInteraction().getTransactionData().getQrCode())
-                .status(PaymentStatusEnum.CREATED) 
+                .status(PaymentStatusEnum.CREATED)
                 .build();
     }
 
@@ -25,7 +25,7 @@ public class PaymentAdapter {
                 .id(paymentDataModel.getId())
                 .qrImage(paymentDataModel.getQrImage())
                 .qrCode(paymentDataModel.getQrCode())
-                .status(convertStatusToDomain(paymentDataModel.getStatus())) 
+                .status(convertStatusToDomain(paymentDataModel.getStatus()))
                 .build();
     }
 
@@ -34,13 +34,13 @@ public class PaymentAdapter {
                 .id(paymentEntity.getId())
                 .qrImage(paymentEntity.getQrImage())
                 .qrCode(paymentEntity.getQrCode())
-                .status(convertStatusToEntity(paymentEntity.getStatus())) 
+                .status(convertStatusToEntity(paymentEntity.getStatus()))
                 .build();
     }
 
     public static PaymentDataModel toDataModelWithId(PaymentEntity paymentEntity) {
         return PaymentDataModel.builder()
-                .id(UUID.randomUUID().toString())
+                .id(paymentEntity.getId())
                 .qrImage(paymentEntity.getQrImage())
                 .qrCode(paymentEntity.getQrCode())
                 .status(convertStatusToEntity(paymentEntity.getStatus()))
@@ -52,7 +52,7 @@ public class PaymentAdapter {
                 .id(paymentEntity.getId())
                 .qrImage(paymentEntity.getQrImage())
                 .qrCode(paymentEntity.getQrCode())
-                .status(paymentEntity.getStatus().name()) 
+                .status(paymentEntity.getStatus().name())
                 .build();
     }
 
@@ -61,30 +61,39 @@ public class PaymentAdapter {
                 .id(paymentDataModel.getId())
                 .qrImage(paymentDataModel.getQrImage())
                 .qrCode(paymentDataModel.getQrCode())
-                .status(paymentDataModel.getStatus().name()) 
+                .status(paymentDataModel.getStatus().name())
                 .build();
     }
 
     private static PaymentStatusEnum convertStatusToDomain(PaymentStatusEnumEntity statusEntity) {
-        if (statusEntity == null) return null;
-        
+        if (statusEntity == null)
+            return null;
+
         switch (statusEntity) {
-            case CREATED: return PaymentStatusEnum.CREATED;
-            case PAID: return PaymentStatusEnum.APPROVED;    
-            case REFUSED: return PaymentStatusEnum.REJECTED; 
-            default: return PaymentStatusEnum.CREATED;
+            case CREATED:
+                return PaymentStatusEnum.CREATED;
+            case PAID:
+                return PaymentStatusEnum.PAID;
+            case REFUSED:
+                return PaymentStatusEnum.REFUSED;
+            default:
+                return PaymentStatusEnum.CREATED;
         }
     }
 
     private static PaymentStatusEnumEntity convertStatusToEntity(PaymentStatusEnum status) {
-        if (status == null) return null;
-        
+        if (status == null)
+            return null;
+
         switch (status) {
-            case CREATED: return PaymentStatusEnumEntity.CREATED;
-            case APPROVED: return PaymentStatusEnumEntity.PAID;    
-            case REJECTED: return PaymentStatusEnumEntity.REFUSED; 
-            case CANCELLED: return PaymentStatusEnumEntity.REFUSED;
-            default: return PaymentStatusEnumEntity.CREATED;
+            case CREATED:
+                return PaymentStatusEnumEntity.CREATED;
+            case PAID:
+                return PaymentStatusEnumEntity.PAID;
+            case REFUSED:
+                return PaymentStatusEnumEntity.REFUSED;
+            default:
+                return PaymentStatusEnumEntity.CREATED;
         }
     }
 }

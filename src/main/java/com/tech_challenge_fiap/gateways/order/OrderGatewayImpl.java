@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.tech_challenge_fiap.adapters.OrderAdapter.toDataModel;
 import static com.tech_challenge_fiap.adapters.OrderAdapter.toEntity;
 
 @RequiredArgsConstructor
@@ -24,13 +23,13 @@ public class OrderGatewayImpl implements OrderGateway {
     @Override
     public OrderEntity save(OrderEntity orderEntity) {
         OrderDataModel orderData;
-        
+
         if (orderEntity.getId() == null) {
             orderData = OrderAdapter.toDataModelWithId(orderEntity);
         } else {
             orderData = OrderAdapter.toDataModel(orderEntity);
         }
-        
+
         OrderDataModel savedOrder = orderRepository.save(orderData);
         return OrderAdapter.toEntity(savedOrder);
     }
@@ -44,7 +43,8 @@ public class OrderGatewayImpl implements OrderGateway {
 
     @Override
     public List<OrderEntity> findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated() {
-        List<OrderDataModel> orderEntities = orderRepository.findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated();
+        List<OrderDataModel> orderEntities = orderRepository
+                .findAllOrderedByStatusAndCreatedAtIgnoringFinalizedAndCreated();
 
         if (orderEntities.isEmpty()) {
             throw new OrdersNotFoundExpection();

@@ -6,7 +6,6 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.tech_challenge_fiap.data.models.ClientDataModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import com.tech_challenge_fiap.infrastructure.configs;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,11 +34,11 @@ public class ClientRepositoryImpl implements ClientRepository {
     public Optional<ClientDataModel> findById(String id) {
         Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
         expressionAttributeValues.put(":id", new AttributeValue().withS(id));
-        
+
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-            .withFilterExpression("id = :id")
-            .withExpressionAttributeValues(expressionAttributeValues);
-        
+                .withFilterExpression("id = :id")
+                .withExpressionAttributeValues(expressionAttributeValues);
+
         List<ClientDataModel> results = dynamoDBMapper.scan(ClientDataModel.class, scanExpression);
         return results.stream().findFirst();
     }
