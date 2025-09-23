@@ -3,25 +3,19 @@ package com.tech_challenge_fiap.data.models;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
 
-@DynamoDBTable(tableName = "tech-challenge-users")
+@DynamoDbBean
 @Getter
 @Setter
 @Builder
 public class ClientDataModel {
 
-    @DynamoDBHashKey 
-    @DynamoDBAttribute(attributeName = "cpf")
     private String cpf;
-
-    @DynamoDBAttribute
     private String id;
-
-    @DynamoDBAttribute
     private String name;
-
-    @DynamoDBAttribute
     private String email;
 
     public ClientDataModel() {}
@@ -33,4 +27,40 @@ public class ClientDataModel {
         this.email = email;
     }
 
+    @DynamoDbPartitionKey
+    @DynamoDbAttribute("cpf")
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    @DynamoDbAttribute("id")
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @DynamoDbAttribute("name")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @DynamoDbAttribute("email")
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
