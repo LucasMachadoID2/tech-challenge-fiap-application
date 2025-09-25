@@ -1,0 +1,35 @@
+name: Pipeline CI
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch: 
+
+jobs:
+  build:
+    name: Maven Build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v3
+      
+    - name: Configurar JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21' 
+        distribution: 'temurin'
+        cache: maven
+        
+    - name: Build com Maven
+      run: mvn -B clean verify
+      
+    - name: Verificar erros de compilação
+      run: |
+        if [ $? -ne 0 ]; then
+          echo "❌ A build falhou. Verifique os erros acima."
+          exit 1
+        else
+          echo "✅ Build concluída com sucesso! Não há erros de compilação."
+        fi
+
